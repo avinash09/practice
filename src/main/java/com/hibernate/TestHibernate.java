@@ -9,14 +9,15 @@ import org.hibernate.query.Query;
 public class TestHibernate {
 
 	public static void main(String[] args) {
-		//add();
-		//persist();
-		//update();
-		//merge();
-		//delete();
-		//get();
-		load();
-		
+		// add();
+		// persist();
+		// update();
+		// merge();
+		// delete();
+		// get();
+		// load();
+		//perTest();
+
 	}
 
 	private static void add() {
@@ -41,14 +42,14 @@ public class TestHibernate {
 			HibernateUtil.shutdown();
 		}
 	}
-	
+
 	private static void persist() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		EmployeeEntity emp = new EmployeeEntity();
 		try {
 			// Add new Employee object
-			
+
 			emp.setEmail("demo-user9@mail.com");
 			emp.setFirstName("demo");
 			emp.setLastName("user");
@@ -64,23 +65,23 @@ public class TestHibernate {
 			emp.setFirstName("Pallavi");
 			HibernateUtil.shutdown();
 		}
-		
+
 	}
-	
+
 	private static void update() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		EmployeeEntity emp = new EmployeeEntity();
 		try {
 			// Add new Employee object
-			
+
 			emp.setEmployeeId(1);
 			emp.setEmail("demo-user@mail.com");
 			emp.setFirstName("demo05");
 			emp.setLastName("user");
-			
+
 			session.saveOrUpdate(emp);
-			
+
 			emp.setFirstName("demo03");
 			tx.commit();
 			emp.setFirstName("demo04");
@@ -92,34 +93,34 @@ public class TestHibernate {
 			HibernateUtil.shutdown();
 		}
 	}
-	
+
 	private static void merge() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		EmployeeEntity emp = new EmployeeEntity();
 		try {
 			// Add new Employee object
-			
+
 			emp.setEmployeeId(1);
 			emp.setEmail("demo-user@mail.com");
 			emp.setFirstName("demo00");
 			emp.setLastName("user");
-			
+
 			session.update(emp);
 			session.close();
-			
+
 			emp.setFirstName("demo01");
-			
+
 			Session session2 = HibernateUtil.getSessionFactory().openSession();
 			Transaction tx2 = session2.beginTransaction();
-			EmployeeEntity emp2 =session2.get(EmployeeEntity.class, 1);
+			EmployeeEntity emp2 = session2.get(EmployeeEntity.class, 1);
 			emp2.setFirstName("demo02");
-			
-			//session2.update(emp);
+
+			// session2.update(emp);
 			session2.merge(emp);
-			
+
 			tx2.commit();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			tx.rollback();
@@ -127,14 +128,14 @@ public class TestHibernate {
 			HibernateUtil.shutdown();
 		}
 	}
-	
+
 	private static void delete() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 
 		try {
 			// delete Employee object
-			
+
 			EmployeeEntity emp = new EmployeeEntity();
 			emp.setEmployeeId(3);
 			emp.setEmail("demo-user4@mail.com");
@@ -150,26 +151,59 @@ public class TestHibernate {
 			HibernateUtil.shutdown();
 		}
 	}
-	
+
 	public static void get() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-		EmployeeEntity emp= session.get(EmployeeEntity.class, 4);
-		System.out.println(emp);
+			EmployeeEntity emp = session.get(EmployeeEntity.class, 4);
+			System.out.println(emp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			HibernateUtil.shutdown();
 		}
 	}
-	
+
 	public static void load() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-		EmployeeEntity emp= session.load(EmployeeEntity.class, 4);
-		System.out.println(emp);
+			EmployeeEntity emp = session.load(EmployeeEntity.class, 4);
+			System.out.println(emp);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			HibernateUtil.shutdown();
+		}
+	}
+
+	public static void perTest() {
+		Long starttime = System.currentTimeMillis();
+		System.out.println("Start Time:-" + starttime);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+
+		try {
+			for (int j = 1; j < 10000; j++) {
+
+				// Add new Employee object
+				EmployeeEntity emp = new EmployeeEntity();
+				emp.setEmail("demo-user" + Math.random() + "@mail.com");
+				emp.setFirstName("demo");
+				emp.setLastName("user");
+
+				session.save(emp);
+
+				if (j % 100 == 0) {
+					session.flush();
+					session.clear();
+				}
+
+			}
+			tx.commit();
+			System.out.println("Conumes Time:-" + (System.currentTimeMillis() - starttime));
+		} catch (Exception e) {
+			e.printStackTrace();
+			// tx.rollback();
 		} finally {
 			HibernateUtil.shutdown();
 		}
