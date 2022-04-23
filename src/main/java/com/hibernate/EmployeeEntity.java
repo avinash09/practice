@@ -32,6 +32,9 @@ public class EmployeeEntity implements Serializable {
 	
 	@Column(name = "LAST_NAME", unique = false, nullable = false, length = 100)
 	private String lastName;
+	
+	@Column(name = "SALARY", length = 100)
+	private Long salary;
 
 	public Integer getEmployeeId() {
 		return employeeId;
@@ -65,11 +68,17 @@ public class EmployeeEntity implements Serializable {
 		this.lastName = lastName;
 	}
 
+	public Long getSalary() {
+		return salary;
+	}
+
+	public void setSalary(Long salary) {
+		this.salary = salary;
+	}
+
 	@Override
 	public String toString() {
 		return "EmployeeEntity [employeeId=" + employeeId + ", email=" + email + ", firstName=" + firstName
-				+ ", lastName=" + lastName + "]";
+				+ ", lastName=" + lastName + ", salary=" + salary + "]";
 	}
-	
-	
 }

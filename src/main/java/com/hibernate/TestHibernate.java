@@ -9,7 +9,7 @@ import org.hibernate.query.Query;
 public class TestHibernate {
 
 	public static void main(String[] args) {
-		// add();
+		 //add();
 		// persist();
 		// update();
 		// merge();
@@ -27,14 +27,13 @@ public class TestHibernate {
 		try {
 			// Add new Employee object
 			EmployeeEntity emp = new EmployeeEntity();
-			emp.setEmail("demo-user10@mail.com");
-			emp.setFirstName("demo");
+			emp.setEmail("demo-user"+Math.random()+"@mail.com");
+			emp.setFirstName("Vikrant");
 			emp.setLastName("user");
+			emp.setSalary(45000l);
 
 			int i = (int) session.save(emp);
-			emp.setFirstName("Avinash");
 			tx.commit();
-			emp.setFirstName("Vikrant");
 		} catch (Exception e) {
 			e.printStackTrace();
 			tx.rollback();
