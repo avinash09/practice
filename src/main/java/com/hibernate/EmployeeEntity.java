@@ -10,7 +10,24 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.NamedNativeQueries;
+import org.hibernate.annotations.NamedNativeQuery;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
+@NamedQueries({
+	@NamedQuery(
+	name = "findEmpById",
+	query = "from EmployeeEntity e where e.employeeId = :employeeId"
+	)
+})
+@NamedNativeQueries({
+	@NamedNativeQuery(
+	name = "findEmpByIdNativeSQL",
+	query = "select * from Employee where ID=:employeeId",
+        resultClass = EmployeeEntity.class
+	)
+})
 @Entity
 @Table(name = "Employee", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "ID"),
