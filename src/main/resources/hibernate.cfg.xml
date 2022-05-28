@@ -24,5 +24,16 @@
 			name="hibernate.c3p0.debugUnreturnedConnectionStackTraces">true</property>
 
 		<mapping class="com.hibernate.EmployeeEntity"></mapping>
+		<mapping class="com.hibernate.embedded.Student"></mapping>
+		<mapping class="com.hibernate.embedded.Address"></mapping>
+		<mapping class="com.hibernate.inheritance.mappedsuperclass.MyEmployee"></mapping>
+		<mapping class="com.hibernate.inheritance.singletable.MyProduct"></mapping>
+		<mapping class="com.hibernate.inheritance.singletable.Book"></mapping>
+		<mapping class="com.hibernate.inheritance.singletable.Pen"></mapping>
+		<mapping class="com.hibernate.inheritance.joined.Animal"></mapping>
+		<mapping class="com.hibernate.inheritance.joined.Pet"></mapping>
+		<mapping class="com.hibernate.inheritance.tableperclass.Vehicle"></mapping>
+		<mapping class="com.hibernate.inheritance.tableperclass.TwoWheeler"></mapping>
+		<mapping class="com.hibernate.inheritance.tableperclass.FourWheeler"></mapping>
 	</session-factory>
 </hibernate-configuration>
